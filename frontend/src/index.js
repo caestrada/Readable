@@ -7,10 +7,11 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
-import { loadCategories } from './actions';
+import { loadCategories, loadPosts } from './actions';
 
 const store = configureStore();
 store.dispatch(loadCategories());
+store.dispatch(loadPosts());
 
 ReactDOM.render(
   <Provider store={store}>

@@ -20,3 +20,8 @@ export const getAllCategories = () => {
             return data.categories;
           });
 }
+
+export const getAllPosts = () => {
+  return fetch(`${api}/posts`, {headers})
+          .then(res => res.json());
+}
