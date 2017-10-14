@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 class Header extends Component {
   render () {
     const { links } = this.props;
-    console.log('links')
     return (
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container">
