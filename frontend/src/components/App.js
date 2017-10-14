@@ -9,7 +9,7 @@ class App extends Component {
       <div>
         <Header />
         <div id="content" className="container">
-          {<Route exact path="/" component={HomePage} />}
+          <Route exact path="/" component={HomePage} />
         </div>
       </div>
     );
