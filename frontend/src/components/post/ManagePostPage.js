@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Thumbnail from './Thumbnail';
-import PostForm from '../post/PostForm';
+import PostForm from './PostForm';
 import * as postActions from '../../actions';
 
 
-class HomePage extends Component {
+class ManagePostPage extends Component {
+
   state = {
     post: Object.assign({}, this.props.initialPost)
   }
@@ -20,36 +20,22 @@ class HomePage extends Component {
   savePost(event) {
     event.preventDefault();
     this.props.savePost(this.state.post)
-    .then(() => this.setState({post: {
-      title:'',
-      body:'',
-      author:'',
-      category:'',
-    }}))
+    .then(post => {
+      this.props.history.push('/');
+    })
   }
 
-
-  render () {
-    const { posts } = this.props;
-
+  render() {
     return (
-      <div className="row">
-        <div className="col-md-9">
-        {posts.map((post) => (
-          <Thumbnail key={post.id} post={post} />
-        ))}
-        </div>
-        <div className="col-md-3 jumbotron">
-          <h4>Quick Post</h4>
-          <PostForm
-            post={this.state.post}
-            options={this.props.categoryOptions}
-            onChange={this.updatePostState.bind(this)}
-            onSave={this.savePost.bind(this)}
-          />
-        </div>
+      <div>
+        <PostForm
+          post={this.state.post}
+          options={this.props.categoryOptions}
+          onChange={this.updatePostState.bind(this)}
+          onSave={this.savePost.bind(this)}
+        />
       </div>
-    )
+    );
   }
 }
 
@@ -62,7 +48,6 @@ function getPostById(posts, id) {
 
 function mapStateToProps(state, ownProps) {
   let postId = ownProps.match.params.id;
-  const { posts } = state;
 
   let post = {
     title:'',
@@ -82,7 +67,6 @@ function mapStateToProps(state, ownProps) {
   return {
     initialPost: post,
     categoryOptions,
-    posts,
   };
 }
 
@@ -92,4 +76,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ManagePostPage);

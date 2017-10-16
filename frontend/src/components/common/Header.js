@@ -9,10 +9,13 @@ class Header extends Component {
       <nav className="navbar navbar-default navbar-fixed-top">
         <div className="container">
           <ul className="nav navbar-nav">
-            <li><Link to="/">Home</Link></li>
+            <li><Link to="/">All</Link></li>
             {links.map((cat, index) => (
               <li key={index}><Link to={cat.path}>{cat.name}</Link></li>
             ))}
+          </ul>
+          <ul className="nav navbar-nav navbar-right">
+            <li><Link className="btn btn-success" to="/post/new">Add Post</Link></li>
           </ul>
         </div>
       </nav>

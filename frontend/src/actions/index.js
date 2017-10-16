@@ -19,6 +19,9 @@ export const loadCategories = () => {
 
 // ::::: POSTS
 export const LOAD_POSTS = 'LOAD_POSTS';
+export const CREATE_POST = 'CREATE_POST';
+export const UPDATE_POST = 'UPDATE_POST';
+
 
 export const loadPostsCreator = (posts) => ({
   type: LOAD_POSTS,
@@ -32,3 +35,25 @@ export const loadPosts = () => {
             .then(posts => dispatch(loadPostsCreator(posts)));
   }
 }
+
+export function createPost(post) {
+  return { type: CREATE_POST, post };
+}
+
+export function updatePost(post) {
+  return { type: UPDATE_POST, post };
+}
+
+export const savePost = (newPost) => {
+  return (dispatch) => {
+    return newPost.id ? api.updatePost(newPost).then(post => {
+                          dispatch(updatePost(post));
+                          return post;
+                        }) : api.savePost(newPost)
+                        .then(post => {
+                          dispatch(createPost(post));
+                          return post;
+                        });
+  }
+}
+
