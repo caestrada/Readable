@@ -22,6 +22,23 @@ export const LOAD_POSTS = 'LOAD_POSTS';
 export const CREATE_POST = 'CREATE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const DELETE_POST = 'DELETE_POST';
+export const SORT_BY_TIME = 'SORT_BY_TIME';
+export const SORT_BY_VOTE = 'SORT_BY_VOTE';
+
+
+export const sortByVote = (mostVotes) => {
+  return {
+    type: SORT_BY_VOTE,
+    mostVotes,
+  }
+}
+
+export const sortByTime = (accending) => {
+  return {
+    type: SORT_BY_TIME,
+    accending,
+  }
+}
 
 export const deletePostCreator = (post) => ({
   type: DELETE_POST,
