@@ -1,4 +1,4 @@
-import { LOAD_POSTS, CREATE_POST, UPDATE_POST } from '../actions';
+import { LOAD_POSTS, CREATE_POST, UPDATE_POST, DELETE_POST } from '../actions';
 
 export default function post(state = [], action) {
   switch(action.type) {
@@ -18,6 +18,10 @@ export default function post(state = [], action) {
         Object.assign({}, action.post)
       ];
 
+    case DELETE_POST:
+      return [
+        ...state.filter(post => post.id !== action.post.id)
+      ]
 
     default:
       return state;

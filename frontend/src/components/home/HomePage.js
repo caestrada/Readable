@@ -10,14 +10,14 @@ class HomePage extends Component {
     post: Object.assign({}, this.props.initialPost)
   }
 
-  updatePostState(event) {
+  updatePostState = (event) => {
     const field = event.target.name;
     let post = Object.assign({}, this.state.post);
     post[field] = event.target.value;
     return this.setState({post: post});
   }
 
-  savePost(event) {
+  savePost = (event) => {
     event.preventDefault();
     this.props.savePost(this.state.post)
     .then(() => this.setState({post: {
@@ -28,6 +28,8 @@ class HomePage extends Component {
     }}))
   }
 
+  deletePost = (id) => this.props.deletePost(id);
+
 
   render () {
     const { posts } = this.props;
@@ -36,7 +38,7 @@ class HomePage extends Component {
       <div className="row">
         <div className="col-md-9">
         {posts.map((post) => (
-          <Thumbnail key={post.id} post={post} />
+          <Thumbnail key={post.id} post={post} deletePost={this.deletePost} />
         ))}
         </div>
         <div className="col-md-3 jumbotron">
@@ -44,8 +46,8 @@ class HomePage extends Component {
           <PostForm
             post={this.state.post}
             options={this.props.categoryOptions}
-            onChange={this.updatePostState.bind(this)}
-            onSave={this.savePost.bind(this)}
+            onChange={this.updatePostState}
+            onSave={this.savePost}
           />
         </div>
       </div>
@@ -89,6 +91,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     savePost: post => dispatch(postActions.savePost(post)),
+    deletePost: id => dispatch(postActions.deletePost(id)),
   }
 }
 

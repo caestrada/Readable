@@ -59,3 +59,14 @@ export const savePost = (post) => {
           })
           .then(res => res.json());
 }
+
+export const deletePost = (id) => {
+  return fetch(`${api}/posts/${id}`, {
+              method: 'DELETE',
+              headers: {
+                ...headers,
+                'Content-Type': 'application/json'
+              },
+            })
+            .then(res => res.json());
+}

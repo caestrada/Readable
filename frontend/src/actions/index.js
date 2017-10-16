@@ -21,11 +21,24 @@ export const loadCategories = () => {
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const CREATE_POST = 'CREATE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
+export const DELETE_POST = 'DELETE_POST';
+
+export const deletePostCreator = (post) => ({
+  type: DELETE_POST,
+  post,
+})
+
+export const deletePost = (id) => {
+  return (dispatch) => {
+    return api.deletePost(id)
+            .then(post => dispatch(deletePostCreator(post)));
+  }
+}
 
 
 export const loadPostsCreator = (posts) => ({
   type: LOAD_POSTS,
-  posts
+  posts,
 })
 
 export const loadPosts = () => {
