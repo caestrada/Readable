@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Thumbnail from './Thumbnail';
+import Thumbnail from '../common/Thumbnail';
 import PostForm from '../post/PostForm';
 import * as postActions from '../../actions';
 
@@ -41,7 +41,12 @@ class HomePage extends Component {
     }}))
   }
 
-  deletePost = (id) => this.props.deletePost(id);
+  deletePost = (id) => {
+    let confirmation = window.confirm("Are you sure you want to delete post?");
+    if(confirmation) {
+      this.props.deletePost(id);
+    }
+  }
 
 
   render () {

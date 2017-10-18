@@ -70,3 +70,14 @@ export const deletePost = (id) => {
             })
             .then(res => res.json());
 }
+
+export const getPostComments = (id) => {
+  return fetch(`${api}/posts/${id}/comments`, {
+    method: 'GET',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+  })
+  .then(res => res.json());
+}

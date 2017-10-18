@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import Header from './common/Header';
 import HomePage from './home/HomePage';
 import ManagePostPage from './post/ManagePostPage';
+import PostDetailPage from './post/PostDetailPage';
 
 class App extends Component {
   render() {
@@ -13,6 +14,7 @@ class App extends Component {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/post/new" component={ManagePostPage} />
           <Route path="/post/edit/:id" component={ManagePostPage} />
+          <Route exact path="/post/:id" component={PostDetailPage} />
         </div>
       </div>
     );

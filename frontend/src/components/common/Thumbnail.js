@@ -12,7 +12,7 @@ const Thumbnail = ({post, deletePost}) => {
         <p>Author: {post.author}</p>
         <p>Last Updated: {Date(post.timestamp)}</p>
         <p>Votes: {post.voteScore}</p>
-        <p>0 Comments</p>
+        <p>{post.comments ? post.comments.length : '0'} Comments</p>
       </div>
     </div>
   )

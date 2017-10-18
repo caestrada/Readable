@@ -17,6 +17,7 @@ export const loadCategories = () => {
   }
 }
 
+
 // ::::: POSTS
 export const LOAD_POSTS = 'LOAD_POSTS';
 export const CREATE_POST = 'CREATE_POST';
@@ -58,11 +59,58 @@ export const loadPostsCreator = (posts) => ({
   posts,
 })
 
+/*
+  1. Fetch all posts.
+  2. Fetch all comments from post ids.
+  3. Append comments to each of their posts.
+  4. Dispatch Posts with their respective comments.
+*/
 export const loadPosts = () => {
   /* A thunk always returns a function that accepts a dispatch. */
   return (dispatch) => {
+
+    // 1. Fetch all posts::::
     return api.getAllPosts()
-            .then(posts => dispatch(loadPostsCreator(posts)));
+    //:::::::::::::::::::::::
+              .then(posts => {
+                return new Promise(resolve => {
+
+                  // 2. Fetch all comments from post ids::::
+                  /* Create an array of Promises for comments */
+                  let postsPromise = [];
+                  posts.forEach(post => {
+                    postsPromise.push(api.getPostComments(post.id));
+                  })
+
+                  Promise.all(postsPromise)
+                  .then(commentsArrays => {
+                    /*  flattent arrays of comments.
+                        e.g., [[c1, c2], [c3], [c4, c5]] => [c1, c2, c3, c4, c5] */
+                    return [].concat(...commentsArrays);
+                  })
+                  //::::::::::::::::::::::::::::::::::::::::
+
+                  .then(allComments => {
+                    // 3. Append comments to each of their posts::::
+                    posts.map(post => {
+                      post.comments = [];
+                      allComments.forEach(comment => {
+                        if(comment.parentId === post.id) {
+                          post.comments.push(comment);
+                        }
+                      })
+                      return post;
+                    })
+                    resolve(posts);
+                    //::::::::::::::::::::::::::::::::::::::::::::::
+                  })
+                })
+              })
+              .then(posts => {
+                // 4. Dispatch Posts with their respective comments.::::::
+                dispatch(loadPostsCreator(posts));
+                //::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+              });
   }
 }
 
