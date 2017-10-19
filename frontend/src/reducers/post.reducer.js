@@ -5,13 +5,14 @@ import {
   DELETE_POST,
   SORT_BY_TIME,
   SORT_BY_VOTE,
+  UP_VOTE,
+  DOWN_VOTE,
 } from '../actions';
 
 export default function post(state = [], action) {
   switch(action.type) {
-
     case LOAD_POSTS:
-      return action.posts.sort((a,b) => {return b.voteScore - a.voteScore});
+      return action.posts;
 
     case CREATE_POST:
       return [
@@ -38,6 +39,22 @@ export default function post(state = [], action) {
       return action.mostVotes ?
               state.slice().sort((a,b) => {return a.voteScore - b.voteScore}) :
               state.slice().sort((a,b) => {return b.voteScore - a.voteScore});
+
+    case UP_VOTE:
+      action.post.voteScore++;
+
+      return [
+        ...state.filter(post => post.id !== action.post.id),
+        Object.assign({}, action.post)
+      ];
+
+    case DOWN_VOTE:
+      action.post.voteScore--;
+
+      return [
+        ...state.filter(post => post.id !== action.post.id),
+        Object.assign({}, action.post)
+      ];
 
     default:
       return state;

@@ -81,3 +81,32 @@ export const getPostComments = (id) => {
   })
   .then(res => res.json());
 }
+
+export const upVote = (post) => {
+  console.log('api upVote', post);
+  return fetch(`${api}/posts/${post.id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      option: "upVote",
+    }),
+  })
+  .then(res => res.json());
+}
+
+export const downVote = (post) => {
+  return fetch(`${api}/posts/${post.id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      option: "downVote",
+    }),
+  })
+  .then(res => res.json());
+}

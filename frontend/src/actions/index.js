@@ -17,15 +17,44 @@ export const loadCategories = () => {
   }
 }
 
+// ::::: COMMENTS
+export const LOAD_COMMENTS   = 'LOAD_COMMENTS';
+
+export const loadComments = (comments) => ({
+  type: LOAD_COMMENTS,
+  comments,
+})
+
 
 // ::::: POSTS
-export const LOAD_POSTS = 'LOAD_POSTS';
-export const CREATE_POST = 'CREATE_POST';
-export const UPDATE_POST = 'UPDATE_POST';
-export const DELETE_POST = 'DELETE_POST';
+export const LOAD_POSTS   = 'LOAD_POSTS';
+export const CREATE_POST  = 'CREATE_POST';
+export const UPDATE_POST  = 'UPDATE_POST';
+export const DELETE_POST  = 'DELETE_POST';
 export const SORT_BY_TIME = 'SORT_BY_TIME';
 export const SORT_BY_VOTE = 'SORT_BY_VOTE';
+export const UP_VOTE      = 'UP_VOTE';
+export const DOWN_VOTE    = 'DOWN_VOTE';
 
+export const upVote = (post) => {
+  return (dispatch) => {
+    return api.upVote(post)
+            .then(post => {
+              dispatch(updatePost(post));
+              return post;
+            });
+  }
+}
+
+export const downVote = (post) => {
+  return (dispatch) => {
+    return api.downVote(post)
+            .then(post => {
+              dispatch(updatePost(post));
+              return post;
+            });
+  }
+}
 
 export const sortByVote = (mostVotes) => {
   return {
@@ -91,6 +120,8 @@ export const loadPosts = () => {
                   //::::::::::::::::::::::::::::::::::::::::
 
                   .then(allComments => {
+                    dispatch(loadComments(allComments))
+
                     // 3. Append comments to each of their posts::::
                     posts.map(post => {
                       post.comments = [];

@@ -5,3 +5,10 @@
 @media screen and (max-width: 768px) {
   #content { padding-top: 200px; }
 }
+
+#vote-icons {
+  margin-left: 5px;
+}
+.vote-icon {
+  top: 2px;
+}

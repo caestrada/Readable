@@ -8,7 +8,6 @@ import * as postActions from '../../actions';
 class HomePage extends Component {
   state = {
     post: Object.assign({}, this.props.initialPost),
-    posts: this.props.posts,
     mostVotes: true,
     sortByMostRecent: true,
   }
@@ -50,18 +49,37 @@ class HomePage extends Component {
 
 
   render () {
+    // console.log('state', this.state);
     const { posts } = this.props;
 
     return (
       <div>
         <h3>Sort Posts</h3>
-        <p><span><button onClick={this.sortByTime} className="btn btn-primary btn-xs"><span className="glyphicon glyphicon-sort" aria-hidden="true"></span></button> Sort by Votes (high to low)</span></p>
-        <p><span><button onClick={this.sortByVote} className="btn btn-default btn-xs"><span className="glyphicon glyphicon-sort" aria-hidden="true"></span></button> Sort by Most Recent (recent to oldest)</span></p>
+        <p>
+          <span>
+            <button onClick={this.sortByVote} className="btn btn-primary btn-xs">
+              <span className="glyphicon glyphicon-sort" aria-hidden="true"></span>
+            </button> Sort by Votes ({this.state.mostVotes ? 'high' : 'low'})
+          </span>
+        </p>
+        <p>
+          <span>
+            <button onClick={this.sortByTime} className="btn btn-default btn-xs">
+              <span className="glyphicon glyphicon-sort" aria-hidden="true"></span>
+            </button> Sort by Most Recent ({this.sortByMostRecent ? 'recent' : 'oldest'})
+          </span>
+        </p>
 
         <div className="row">
           <div className="col-md-9">
           {posts.map((post) => (
-            <Thumbnail key={post.id} post={post} deletePost={this.deletePost} />
+            <Thumbnail
+              key={post.id}
+              post={post}
+              deletePost={this.deletePost}
+              upVote={this.props.upVote}
+              downVote={this.props.downVote}
+            />
           ))}
           </div>
           <div className="col-md-3 jumbotron">
@@ -88,7 +106,7 @@ function getPostById(posts, id) {
 
 function mapStateToProps(state, ownProps) {
   let postId = ownProps.match.params.id;
-  const { posts } = state;
+  const { posts, comments } = state;
 
   let post = {
     title:'',
@@ -105,6 +123,10 @@ function mapStateToProps(state, ownProps) {
     return category.name;
   })
 
+  posts.map((post) => {
+    post.comments = comments.filter((comment) => post.id === comment.parentId);
+  });
+
   return {
     initialPost: post,
     categoryOptions,
@@ -113,11 +135,15 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
+  // console.log('mapDispatchToProps');
+
   return {
     savePost: post => dispatch(postActions.savePost(post)),
     deletePost: id => dispatch(postActions.deletePost(id)),
     sortByTime: accending => dispatch(postActions.sortByTime(accending)),
     sortByVote: mostVotes => dispatch(postActions.sortByVote(mostVotes)),
+    upVote: post => dispatch(postActions.upVote(post)),
+    downVote: post => dispatch(postActions.downVote(post)),
   }
 }
 

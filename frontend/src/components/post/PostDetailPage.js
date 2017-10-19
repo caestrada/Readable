@@ -5,9 +5,6 @@ import * as postActions from '../../actions';
 
 
 class PostDetailPage extends Component {
-  state = {
-    post: Object.assign({}, this.props.post),
-  }
 
   deletePost = (id) => {
     let confirmation = window.confirm("Are you sure you want to delete post?");
@@ -16,13 +13,26 @@ class PostDetailPage extends Component {
     }
   };
 
+  upVote = (post) => {
+    this.props.upVote(post)
+  }
+
+  downVote = (post) => {
+    this.props.downVote(post)
+  }
+
   render () {
-    const {post} = this.state;
+    const {post} = this.props;
 
     return (
       <div>
         <h1>Post Detail</h1>
-        <Thumbnail post={post} deletePost={this.deletePost} />
+        <Thumbnail
+          post={post}
+          deletePost={this.deletePost}
+          upVote={this.upVote}
+          downVote={this.downVote}
+        />
       </div>
     )
   }
@@ -35,6 +45,7 @@ function getPostById(posts, id) {
 }
 
 function mapStateToProps(state, ownProps) {
+  const {comments} = state;
   const postId = ownProps.match.params.id;
 
   let post = {
@@ -48,6 +59,8 @@ function mapStateToProps(state, ownProps) {
     post = getPostById(state.posts, postId);
   }
 
+  post.comments = comments.filter((comment) => post.id === comment.parentId);
+
   return {
     post,
   }
@@ -56,6 +69,8 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     deletePost: id => dispatch(postActions.deletePost(id)),
+    upVote: post => dispatch(postActions.upVote(post)),
+    downVote: post => dispatch(postActions.downVote(post)),
   }
 }
 
