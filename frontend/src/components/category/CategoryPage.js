@@ -31,12 +31,8 @@ function getRealatePosts(posts, type) {
 }
 
 function mapStateToProps(state, ownProps) {
-  console.log('state', state);
-  console.log('ownProps', ownProps);
-  let catType = ownProps.location.search.substring(1);
-  console.log('location', catType);
+  let catType = ownProps.match.params.category;
   let posts = getRealatePosts(state.posts, catType);
-  console.log('relatedPosts', posts);
 
   posts.map((post) => {
     post.comments = state.comments.filter((comment) => post.id === comment.parentId);

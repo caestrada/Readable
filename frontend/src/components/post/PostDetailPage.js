@@ -46,7 +46,7 @@ function getPostById(posts, id) {
 
 function mapStateToProps(state, ownProps) {
   const {comments} = state;
-  const postId = ownProps.match.params.id;
+  const postId = ownProps.match.params.post_id;
 
   let post = {
     title:'',

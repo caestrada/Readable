@@ -16,8 +16,12 @@ class App extends Component {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/post/new" component={ManagePostPage} />
           <Route path="/post/edit/:id" component={ManagePostPage} />
-          <Route exact path="/post/:id" component={PostDetailPage} />
-          <Route exact path="/category" component={CategoryPage} />
+          {/* <Route exact path="/post/:id" component={PostDetailPage} /> */}
+          {/* <Route exact path="/category" component={CategoryPage} /> */}
+
+          <Route exact path="/:category/:post_id" component={PostDetailPage} />
+          <Route exact path="/:category" component={CategoryPage} />
+
         </div>
       </div>
     );
