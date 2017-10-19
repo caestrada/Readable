@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import CommentThumbnail from './CommentThumbnail';
 
 class Thumbnail extends Component {
   state = {
@@ -46,27 +47,7 @@ class Thumbnail extends Component {
               aria-hidden="true">Add Comment</button>
 
             {post.comments.map(comment => (
-              <div key={comment.id} className="jumbotron">
-                <p>{comment.body}</p>
-                <p><Link to={`/comment/edit/${comment.id}`} className="btn btn-primary btn-xs">Edit</Link> <button onClick={() => deletePost(comment.id)} className="btn btn-default btn-xs">Delete</button></p>
-                <p>Author: {comment.author}</p>
-                <p>Last Updated: {Date(comment.timestamp)}</p>
-                <p>
-                  Votes: {post.voteScore}
-                  <span id="vote-icons">
-                    <button
-                      onClick={() => upVote(post)}
-                      className="glyphicon glyphicon-circle-arrow-up vote-icon"
-                      aria-hidden="true">
-                    </button>
-                    <button
-                      onClick={() => downVote(post)}
-                      className="glyphicon glyphicon-circle-arrow-down vote-icon"
-                      aria-hidden="true">
-                    </button>
-                  </span>
-                </p>
-              </div>
+              <CommentThumbnail key={comment.id} comment={comment} />
             ))}
           </div>
           :

@@ -17,7 +17,7 @@ class Header extends Component {
             ))}
           </ul>
           <ul className="nav navbar-nav navbar-right">
-            <li><Link className="btn btn-success" to="/post/new">Add Post</Link></li>
+            <li><Link className="btn btn-success" to="/post">Add Post</Link></li>
           </ul>
         </div>
       </nav>
