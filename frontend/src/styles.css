@@ -12,3 +12,25 @@
 .vote-icon {
   top: 2px;
 }
+
+.commentLink {
+  cursor: pointer;
+}
+
+.commnets-jumbotron {
+  background: #02b3e4;
+  padding-right: 10px !important;
+  padding-left: 10px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.jumbotron p {
+  margin-bottom: 0;
+  font-size: 1.5rem;
+  font-weight: 200;
+}
+
+.comment-button {
+  margin-bottom: 40px;
+}

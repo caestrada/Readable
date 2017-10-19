@@ -11,7 +11,12 @@ class Header extends Component {
           <ul className="nav navbar-nav">
             <li><Link to="/">All</Link></li>
             {links.map((cat, index) => (
-              <li key={index}><Link to={cat.path}>{cat.name}</Link></li>
+              <li key={index}>
+                <Link to={{
+                  pathname:'category',
+                  search: cat.path
+                }}>{cat.name}</Link>
+              </li>
             ))}
           </ul>
           <ul className="nav navbar-nav navbar-right">
