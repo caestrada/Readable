@@ -41,10 +41,7 @@ class Thumbnail extends Component {
         {(this.state.expandComments) ?
           <div className="jumbotron commnets-jumbotron">
             <h4>Comments</h4>
-            <button
-              onClick={() => console.log('add comment')}
-              className="btn btn-default comment-button"
-              aria-hidden="true">Add Comment</button>
+            <Link className="btn btn-default comment-button" to={{ pathname: "/comment", query: { parentId: post.id } }}>Add Comment</Link>
 
             {post.comments.map(comment => (
               <CommentThumbnail key={comment.id} comment={comment} />

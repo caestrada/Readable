@@ -21,6 +21,26 @@ export const getAllCategories = () => {
           });
 }
 
+export const saveComment = (comment) => {
+  return fetch(`${api}/comments`, {
+            method: 'POST',
+            headers: {
+              ...headers,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              id: Math.floor((Math.random() * 100) + 1).toString(),
+              timestamp: Date.now(),
+              body: comment.body,
+              author: comment.author,
+              parentId: comment.parentId
+            }),
+          })
+          .then(res => res.json());
+}
+
+
+
 export const getAllPosts = () => {
   return fetch(`${api}/posts`, {headers})
           .then(res => res.json());
