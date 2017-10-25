@@ -2,7 +2,9 @@ import {
   LOAD_COMMENTS,
   CREATE_COMMENT,
   UPDATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  UP_VOTE_COMMENT,
+  DOWN_VOTE_COMMENT,
 } from '../actions';
 
 export default function post(state = [], action) {
@@ -25,6 +27,22 @@ export default function post(state = [], action) {
       return [
         ...state.filter(comment => comment.id !== action.comment.id)
       ]
+
+    case UP_VOTE_COMMENT:
+      action.comment.voteScore++;
+
+      return [
+        ...state.filter(comment => comment.id !== action.comment.id),
+        Object.assign({}, action.comment)
+      ];
+
+    case DOWN_VOTE_COMMENT:
+      action.comment.voteScore--;
+
+      return [
+        ...state.filter(comment => comment.id !== action.comment.id),
+        Object.assign({}, action.comment)
+      ];
 
     default:
       return state;

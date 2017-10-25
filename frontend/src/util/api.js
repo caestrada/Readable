@@ -65,6 +65,34 @@ export const deleteComment = (id) => {
             .then(res => res.json());
 }
 
+export const upVoteComment = (comment) => {
+  return fetch(`${api}/comments/${comment.id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      option: "upVote",
+    }),
+  })
+  .then(res => res.json());
+}
+
+export const downVoteComment = (comment) => {
+  return fetch(`${api}/comments/${comment.id}`, {
+    method: 'POST',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      option: "downVote",
+    }),
+  })
+  .then(res => res.json());
+}
+
 export const getAllPosts = () => {
   return fetch(`${api}/posts`, {headers})
           .then(res => res.json());
@@ -127,7 +155,6 @@ export const getPostComments = (id) => {
 }
 
 export const upVote = (post) => {
-  console.log('api upVote', post);
   return fetch(`${api}/posts/${post.id}`, {
     method: 'POST',
     headers: {

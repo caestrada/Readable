@@ -22,6 +22,28 @@ export const LOAD_COMMENTS   = 'LOAD_COMMENTS';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const UP_VOTE_COMMENT      = 'UP_VOTE_COMMENT';
+export const DOWN_VOTE_COMMENT    = 'DOWN_VOTE_COMMENT';
+
+export const upVoteComment = (comment) => {
+  return (dispatch) => {
+    return api.upVoteComment(comment)
+            .then(comment => {
+              dispatch(updateComment(comment));
+              return comment;
+            });
+  }
+}
+
+export const downVoteComment = (comment) => {
+  return (dispatch) => {
+    return api.downVoteComment(comment)
+            .then(comment => {
+              dispatch(updateComment(comment));
+              return comment;
+            });
+  }
+}
 
 export const deleteCommentCreator = (comment) => ({
   type: DELETE_COMMENT, comment,
@@ -48,13 +70,7 @@ export function updateComment(comment) {
 }
 
 export const saveComment = (newComment) => {
-  console.log('saveComment', newComment);
   return (dispatch) => {
-    // return  api.saveComment(newComment)
-    //         .then(comment => {
-    //           dispatch(createComment(comment));
-    //           return comment;
-    //         });
     return newComment.id
             ? api.updateComment(newComment).then(comment => {
                 dispatch(updateComment(comment));
@@ -76,8 +92,8 @@ export const UPDATE_POST  = 'UPDATE_POST';
 export const DELETE_POST  = 'DELETE_POST';
 export const SORT_BY_TIME = 'SORT_BY_TIME';
 export const SORT_BY_VOTE = 'SORT_BY_VOTE';
-export const UP_VOTE      = 'UP_VOTE';
-export const DOWN_VOTE    = 'DOWN_VOTE';
+export const UP_VOTE_POST      = 'UP_VOTE_POST';
+export const DOWN_VOTE_POST    = 'DOWN_VOTE_POST';
 
 export const upVote = (post) => {
   return (dispatch) => {

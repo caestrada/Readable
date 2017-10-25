@@ -5,8 +5,8 @@ import {
   DELETE_POST,
   SORT_BY_TIME,
   SORT_BY_VOTE,
-  UP_VOTE,
-  DOWN_VOTE,
+  UP_VOTE_POST,
+  DOWN_VOTE_POST,
 } from '../actions';
 
 export default function post(state = [], action) {
@@ -40,7 +40,7 @@ export default function post(state = [], action) {
               state.slice().sort((a,b) => {return a.voteScore - b.voteScore}) :
               state.slice().sort((a,b) => {return b.voteScore - a.voteScore});
 
-    case UP_VOTE:
+    case UP_VOTE_POST:
       action.post.voteScore++;
 
       return [
@@ -48,7 +48,7 @@ export default function post(state = [], action) {
         Object.assign({}, action.post)
       ];
 
-    case DOWN_VOTE:
+    case DOWN_VOTE_POST:
       action.post.voteScore--;
 
       return [
