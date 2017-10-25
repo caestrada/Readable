@@ -36,13 +36,25 @@ class ManageCommentPage extends Component {
   }
 }
 
+function getCommentById(comments, id) {
+  const comment = comments.filter(comment => comment.id === id);
+  if(comment.length) return comment[0];
+  return {};
+}
+
 function mapStateToProps(state, ownProps) {
+  const {comments} = state;
   let parentId = (ownProps.location.query ? ownProps.location.query.parentId : '');
   let comment = {
     body:'',
     author:'',
     parentId: parentId,
   };
+
+  let commentId = ownProps.match.params.id;
+  if(commentId) {
+    comment = getCommentById(comments, commentId);
+  }
 
   return {
     initialComment: comment,

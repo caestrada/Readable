@@ -20,6 +20,7 @@ export const loadCategories = () => {
 // ::::: COMMENTS
 export const LOAD_COMMENTS   = 'LOAD_COMMENTS';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 
 export const loadComments = (comments) => ({
   type: LOAD_COMMENTS,
@@ -30,23 +31,28 @@ export function createComment(comment) {
   return { type: CREATE_COMMENT, comment };
 }
 
+export function updateComment(comment) {
+  return { type: UPDATE_COMMENT, comment };
+}
+
 export const saveComment = (newComment) => {
+  console.log('saveComment', newComment);
   return (dispatch) => {
-    return  api.saveComment(newComment)
-            .then(comment => {
-              dispatch(createComment(comment));
-              return comment;
-            });
-    // return newComment.id
-    //         ? api.updateComment(newComment).then(comment => {
-    //             dispatch(updateComment(comment));
-    //             return comment;
-    //           })
-    //         : api.saveComment(newComment)
-    //           .then(comment => {
-    //             dispatch(createComment(comment));
-    //             return comment;
-    //           });
+    // return  api.saveComment(newComment)
+    //         .then(comment => {
+    //           dispatch(createComment(comment));
+    //           return comment;
+    //         });
+    return newComment.id
+            ? api.updateComment(newComment).then(comment => {
+                dispatch(updateComment(comment));
+                return comment;
+              })
+            : api.saveComment(newComment)
+              .then(comment => {
+                dispatch(createComment(comment));
+                return comment;
+              });
   }
 }
 

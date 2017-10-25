@@ -1,4 +1,4 @@
-import { LOAD_COMMENTS, CREATE_COMMENT } from '../actions';
+import { LOAD_COMMENTS, CREATE_COMMENT, UPDATE_COMMENT } from '../actions';
 
 export default function post(state = [], action) {
   switch(action.type) {
@@ -8,6 +8,12 @@ export default function post(state = [], action) {
     case CREATE_COMMENT:
       return [
         Object.assign({}, action.comment), ...state
+      ];
+
+    case UPDATE_COMMENT:
+      return [
+        ...state.filter(comment => comment.id !== action.comment.id),
+        Object.assign({}, action.comment)
       ];
 
     default:

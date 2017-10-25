@@ -21,6 +21,21 @@ export const getAllCategories = () => {
           });
 }
 
+export const updateComment = (comment) => {
+  return fetch(`${api}/comments/${comment.id}`, {
+    method: 'PUT',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      timestamp: comment.timestamp,
+      body: comment.body,
+    }),
+  })
+  .then(res => res.json());
+}
+
 export const saveComment = (comment) => {
   return fetch(`${api}/comments`, {
             method: 'POST',
