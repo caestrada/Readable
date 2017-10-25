@@ -1,4 +1,9 @@
-import { LOAD_COMMENTS, CREATE_COMMENT, UPDATE_COMMENT } from '../actions';
+import {
+  LOAD_COMMENTS,
+  CREATE_COMMENT,
+  UPDATE_COMMENT,
+  DELETE_COMMENT
+} from '../actions';
 
 export default function post(state = [], action) {
   switch(action.type) {
@@ -15,6 +20,11 @@ export default function post(state = [], action) {
         ...state.filter(comment => comment.id !== action.comment.id),
         Object.assign({}, action.comment)
       ];
+
+    case DELETE_COMMENT:
+      return [
+        ...state.filter(comment => comment.id !== action.comment.id)
+      ]
 
     default:
       return state;

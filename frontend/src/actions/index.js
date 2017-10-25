@@ -21,6 +21,18 @@ export const loadCategories = () => {
 export const LOAD_COMMENTS   = 'LOAD_COMMENTS';
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
+
+export const deleteCommentCreator = (comment) => ({
+  type: DELETE_COMMENT, comment,
+})
+
+export const deleteComment = (id) => {
+  return (dispatch) => {
+    return api.deleteComment(id)
+            .then(post => dispatch(deleteCommentCreator(post)));
+  }
+}
 
 export const loadComments = (comments) => ({
   type: LOAD_COMMENTS,
@@ -112,7 +124,6 @@ export const deletePost = (id) => {
             .then(post => dispatch(deletePostCreator(post)));
   }
 }
-
 
 export const loadPostsCreator = (posts) => ({
   type: LOAD_POSTS,

@@ -1,11 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CommentThumbnail from './CommentThumbnail';
+import * as commentActions from '../../actions';
 
 class Thumbnail extends Component {
   state = {
     expandComments: false,
   }
+
+  deleteComment = (id) => {
+    let confirmation = window.confirm("Are you sure you want to delete comment?");
+    if(confirmation) {
+      this.props.deleteComment(id)
+      .then(() => (this.setState((curState) => {
+        return {expandComments: !curState.expandComments}
+      })));
+    }
+  };
 
   render() {
     const {post, deletePost, upVote, downVote} = this.props;
@@ -44,7 +56,7 @@ class Thumbnail extends Component {
             <Link className="btn btn-default comment-button" to={{ pathname: "/comment", query: { parentId: post.id } }}>Add Comment</Link>
 
             {post.comments.map(comment => (
-              <CommentThumbnail key={comment.id} comment={comment} />
+              <CommentThumbnail key={comment.id} comment={comment} deleteComment={this.deleteComment} />
             ))}
           </div>
           :
@@ -54,5 +66,11 @@ class Thumbnail extends Component {
     );
   }
 }
+function mapDispatchToProps(dispatch) {
+  return {
+    deleteComment: id => dispatch(commentActions.deleteComment(id)),
+  }
+}
 
-export default Thumbnail;
+export default connect(null, mapDispatchToProps)(Thumbnail);
+
